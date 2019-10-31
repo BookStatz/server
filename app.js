@@ -6,8 +6,8 @@ const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const cors = require('cors')
-// const errorHandler = require('./middlewares/errorHandler')
-// const routes = require('./routes')
+const errorHandler = require('./middlewares/errorHandler')
+const routes = require('./routes')
 
 const app = express()
 const PORT = 3000 || process.env.PORT
@@ -22,8 +22,8 @@ mongoose.connect(process.env.MONGODB_URL, {useNewUrlParser: true,useUnifiedTopol
     })
     .catch(console.log)
 
-// app.use(errorHandler)
-// app.use('/', routes)
+app.use(errorHandler)
+app.use('/', routes)
 
 app.listen(PORT, () => {
     console.log(`App is listening to the PORT ${PORT}`)
