@@ -5,7 +5,9 @@ class StockController {
         axios.get(`/v1/stock?symbol=AAPL,MSFT,HSBA.L,SNAP,TWTR&api_token=${process.env.WORLD_TRADING_TOKEN}`)
             .then(stocks => {
                 let data = stocks.data
-                res.status(200).json(data)
+                res.status(200).json({
+                    data
+                })
             })
             .catch(err => {
                 console.log(err);
@@ -13,9 +15,12 @@ class StockController {
     }
 
     static getByDate(req, res, next) {
-        axios.get(`/v1/history_multi_single_day?symbol=AAPL,MSFT&date=2019-10-31&api_token=${process.env.WORLD_TRADING_TOKEN}`)
+        axios.get(`/v1/history_multi_single_day?symbol=${req.body.stock}&date=${req.body.date}&api_token=${process.env.WORLD_TRADING_TOKEN}`)
             .then(stocks => {
-                res.status(200).json(stocks.data)
+                let data = stocks.data
+                res.status(200).json({
+                    data
+                })
             })
             .catch(err => {
                 console.log(err)
@@ -24,9 +29,12 @@ class StockController {
 
 
     static getFromTo(req, res, next) {
-        axios.get(`/v1/history?symbol=AAPL&sort=newest&date_from=2019-10-24&date_to=2019-10-31&api_token=${process.env.WORLD_TRADING_TOKEN}`)
+        axios.get(`/v1/history?symbol=${req.body.stock}&sort=newest&date_from=${req.body.lastDate}&date_to=${req.body.currentDate}&api_token=${process.env.WORLD_TRADING_TOKEN}`)
             .then(stocks => {
-                res.status(200).json(stocks.data)
+                let data = stocks.data
+                res.status(200).json({
+                    data
+                })
             })
             .catch(err => {
                 console.log(err)
