@@ -21,7 +21,8 @@ let userSchema = new Schema({
     password: {
         type: String,
         required: [true, 'Password is required']
-    }
+    }, 
+    favorites: []
 })
 
 userSchema.pre('save', function(next) {

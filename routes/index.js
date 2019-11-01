@@ -5,6 +5,7 @@ const eventRoutes = require('./eventBrite')
 
 router.use('/', userRoutes)
 router.use('/fav', newsRoutes)
+router.use('/news', newsRoutes)
 router.use('/eventbrite', eventRoutes)
 
 module.exports = router
