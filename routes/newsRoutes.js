@@ -5,6 +5,8 @@ router.get('/top-headlines', newsController.getTopHeadlines)
 
 router.get('/search/:query', newsController.search)
 
+// router.get('/search/:dateEarliest/:dateLatest', newsController.searchByDate)
+
 module.exports = router
 
 
