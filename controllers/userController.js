@@ -4,6 +4,38 @@ const verifyPassword = require('../helpers/verifyPassword')
 const {OAuth2Client} = require('google-auth-library');
 
 class userController {
+    static addToFavorites (req, res, next) {
+        const id = req.LoggedUser.id
+
+        User.findByIdAndUpdate(id, {
+            $push: {
+                favorites: req.body.favorites
+            }
+        })
+            .then(user => {
+                res.status(200).json({
+                    msg: 'Successfully added to favorites'
+                })
+            })
+            .catch(next)
+    }
+
+    static removeFromFavorites (req, res, next) {
+        const id = req.LoggedUser.id
+
+        User.findByIdAndUpdate(id, {
+            $pull: {
+                favorites: req.body.favorites
+            }
+        })
+            .then(user => {
+                res.status(200).json({
+                    msg: 'Successfully added to favorites'
+                })
+            })
+            .catch(next)
+    }
+    
     static register(req, res, next) {
         const createdData = {
             name: req.body.name,
