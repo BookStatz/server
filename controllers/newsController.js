@@ -1,35 +1,27 @@
-const News = require('../models/news')
+const axios = require('axios')
 
 class newsController {
-    static create(req, res, next) {
-        const createdData = {
-            title: req.body.title,
-            description: req.body.description,
-            img: req.body.img,
-            user: req.LoggedUser.id
-        }
+  static getTopHeadlines(req, res, next) {
+    axios({
+      method: 'get',
+      url: `https://newsapi.org/v2/top-headlines?country=id&apiKey=${process.env.NEWS_API_KEY}`
+    })
+      .then(({data}) => {
+        res.status(200).json(data)
+      })
+      .catch(next)
+  }
 
-        News.create(createdData)
-            .then(news => {
-                res.status(201).json({
-                    news, msg: 'News has been successfully added to bookmarks'
-                })
-            })
-            .catch(next)
-    }
-
-    static delete(req, res, next) {
-        const id = req.params.id
-
-        News.findByIdAndDelete(id)
-            .then(news => {
-                res.status(200).json({
-                    news, msg: 'News has been successfully removed to bookmarks'
-                })
-            })
-            .catch(next)
-    }
-
+  static search(req, res, next) {
+    axios({
+      method: 'get',
+      url: `https://newsapi.org/v2/top-headlines?q=${req.params.query}&country=id&apiKey=${process.env.NEWS_API_KEY}`
+    })
+      .then(({data}) => {
+        res.status(200).json(data)
+      })
+      .catch(next)
+  }
 }
 
 module.exports = newsController
